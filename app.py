@@ -46,14 +46,14 @@ def visualize_families():
     # Plot: Average fare by family size for each class
     fig = px.scatter(
         grouped,
-        x='FamilySize',
+        x='family_size',
         y='avg_fare',
         size='n_passengers',
         color='Pclass',
         hover_data=['n_passengers', 'avg_fare'],
         title='Family Size vs Average Fare by Passenger Class',
         labels={
-            'FamilySize': 'Family Size',
+            'family_size': 'Family Size',
             'avg_fare': 'Average Fare',
             'Pclass': 'Passenger Class',
             'n_passengers': 'Number of Passengers'

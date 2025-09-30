@@ -27,10 +27,10 @@ def family_groups():
     - returns dataframe with family size, class, number of passengers, average fare, min fare, max fare
     """
     ds = read_dataset()
-    ds['FamilySize'] = ds['SibSp'] + ds['Parch'] + 1  # +1 for self
+    ds['family_size'] = ds['SibSp'] + ds['Parch'] + 1  # +1 for self
 
     # Group by FamilySize and Pclass
-    grouped = ds.groupby(['FamilySize', 'Pclass']).agg(
+    grouped = ds.groupby(['family_size', 'Pclass']).agg(
         n_passengers=('PassengerId', 'count'),
         avg_fare=('Fare', 'mean'),
         min_fare=('Fare', 'min'),
@@ -38,7 +38,7 @@ def family_groups():
     ).reset_index()
 
     # Sort by class then family size
-    grouped = grouped.sort_values(by=['Pclass', 'FamilySize'])
+    grouped = grouped.sort_values(by=['Pclass', 'family_size'])
     return grouped
 
 def last_names():
