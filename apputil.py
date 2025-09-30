@@ -19,8 +19,8 @@ def survival_demographics():
     groups = ds.groupby(['Pclass','Sex','age_group']).agg(n_passengers=('PassengerId', 'count'),n_survivors=('Survived', 'sum')).reset_index()
     groups['survival_rate'] = groups['n_survivors'] / groups['n_passengers']
     #rename column for autograder compatibility
-    groups.rename(columns={'Pclass':'pclass'}, inplace=True)
-    return groups.sort_values(by=['pclass', 'age_group', 'Sex'])
+    groups.rename(columns={'Pclass':'pclass','Sex':'sex'}, inplace=True)
+    return groups.sort_values(by=['pclass', 'age_group', 'sex'])
 
 
 def family_groups():
