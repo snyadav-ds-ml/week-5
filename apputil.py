@@ -12,15 +12,15 @@ def survival_demographics():
     """
     #print(ds.columns)
     ds = read_dataset()
-    category_values = pd.Series(['Child', 'Teen', 'Adult', 'Senior'], dtype='category')
+    category_values = ['Child', 'Teen', 'Adult', 'Senior']
     bin_values = [0, 11, 19, 59, 100]
     ds['age_group'] = pd.cut(ds['Age'], bins=bin_values, labels=category_values, right=True)
-
+    ds['age_group'] = ds['age_group'].astype('category')
     groups = ds.groupby(['Pclass','Sex','age_group']).agg(n_passengers=('PassengerId', 'count'),n_survivors=('Survived', 'sum')).reset_index()
     groups['survival_rate'] = groups['n_survivors'] / groups['n_passengers']
     #rename column for autograder compatibility
     groups.rename(columns={'Pclass':'pclass'}, inplace=True)
-    return groups.sort_values(by=['pclass', 'category', 'Sex'])
+    return groups.sort_values(by=['pclass', 'age_group', 'Sex'])
 
 
 def family_groups():
