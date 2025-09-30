@@ -12,7 +12,7 @@ def survival_demographics():
     """
     #print(ds.columns)
     ds = read_dataset()
-    category_values = ['Child', 'Teen', 'Adult', 'Senior']
+    category_values = pd.Series(['Child', 'Teen', 'Adult', 'Senior'], dtype='category')
     bin_values = [0, 11, 19, 59, 100]
     ds['age_group'] = pd.cut(ds['Age'], bins=bin_values, labels=category_values, right=True)
 
