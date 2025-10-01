@@ -1,5 +1,6 @@
 import plotly.express as px
 import pandas as pd
+import numpy as np
 
 def read_dataset():
     df = pd.read_csv('https://raw.githubusercontent.com/leontoddjohnson/datasets/main/data/titanic.csv')
@@ -66,11 +67,16 @@ def determine_age_division():
     # Compute median age for each class
     median_age_by_class = ds.groupby('Pclass')['Age'].transform('median')
     
-    # Compare each passenger's age to the median of their class
-    ds['older_passenger'] = ds['Age'] > median_age_by_class
-    
-    # Ensure Boolean type
+
+    ds['older_passenger'] = np.where(
+        ds['Age'].notna(),           # Only for non-NA ages
+        ds['Age'] > median_age_by_class,
+        np.nan                      # Assign NaN for missing ages                   
+    )
+
+     # Ensure Boolean type
     ds['older_passenger'] = ds['older_passenger'].astype(bool)
+
     #rename column for autograder compatibility
     ds.rename(columns={'Age':'age'}, inplace=True)
     
