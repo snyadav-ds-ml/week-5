@@ -65,12 +65,12 @@ def determine_age_division():
     ds = read_dataset()
     class_medians = ds.groupby('Pclass')['Age'].median()
     
-    # Create a new column indicating if passenger is older than median for their class
-    ds['older_passenger'] = ds.apply(
-        lambda row: row['Age'] > class_medians[row['Pclass']] if pd.notna(row['Age']) else False,
-        axis=1
-    )
     
+    ds['older_passenger'] = np.where(
+        ds['Age'].notna(),
+        ds.apply(lambda row: row['Age'] > class_medians[row['Pclass']], axis=1),
+        np.nan  # Set to NaN when age is NaN
+    )
     # Also add the actual median values for reference
     ds['class_median_age'] = ds['Pclass'].map(class_medians)
     
