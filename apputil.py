@@ -71,6 +71,8 @@ def determine_age_division():
     
     # Ensure Boolean type
     ds['older_passenger'] = ds['older_passenger'].astype(bool)
+    #rename column for autograder compatibility
+    ds.rename(columns={'Age':'age'}, inplace=True)
     
     return ds
 
