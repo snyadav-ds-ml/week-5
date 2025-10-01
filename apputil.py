@@ -57,6 +57,23 @@ def last_names():
     return last_name_counts
 
 
+def determine_age_division():
+    """
+    - Add a new column 'older_passenger' that indicates whether a passenger's age is above the median age of their passenger class.
+    - Returns the updated DataFrame.
+    """
+    ds = read_dataset()
+    # Compute median age for each class
+    median_age_by_class = ds.groupby('Pclass')['Age'].transform('median')
+    
+    # Compare each passenger's age to the median of their class
+    ds['older_passenger'] = ds['Age'] > median_age_by_class
+    
+    # Ensure Boolean type
+    ds['older_passenger'] = ds['older_passenger'].astype(bool)
+    
+    return ds
+
 if __name__ == "__main__":
     print(survival_demographics())
     print(family_groups())
